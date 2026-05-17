@@ -1,0 +1,42 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download the code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Step 3: Install dependencies (express, mongoose)
+      - name: Install Dependencies
+        run: npm install
+
+      # Step 4: Start MongoDB and check the server starts correctly
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.11.0
+        with:
+          mongodb-version: '7.0'
+
+      - name: Test Server Starts
+        run: |
+          node server.js &
+          sleep 3
+          curl http://localhost:3000/items
+        env:
+          NODE_ENV: test
+
+      # Step 5: Done!
+      - name: Done
+        run: echo "✅ Build complete!"
