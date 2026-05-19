@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 // ─── Connect to MongoDB ───────────────────────────────────────
-mongoose.connect("mongodb://localhost:27017/simpledb")
+mongoose.connect("mongodb+srv://Hasan47_db_user:123456789%40@cluster0.ku6pfka.mongodb.net/simpledb")
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.log("❌ MongoDB Error:", err));
 

@@ -1,0 +1,23 @@
+name: Multi-Branch Deployment
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Production
+        if: github.ref == 'refs/heads/main'
+        run: echo "Deploying to Production..."
+
+      - name: Deploy to QA
+        if: github.ref == 'refs/heads/dev'
+        run: echo "Deploying to QA..."
